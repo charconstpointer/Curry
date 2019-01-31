@@ -18,10 +18,10 @@ namespace Curry.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
         private readonly ITokenFactory<JwtSecurityToken> _tokenFactory;
         //IConfiguration config;
-        public AccountsController(UserService service, ITokenFactory<JwtSecurityToken> tokenFactory)
+        public AccountsController(IUserService service, ITokenFactory<JwtSecurityToken> tokenFactory)
         {
             _userService = service;
             _tokenFactory = tokenFactory;
@@ -55,7 +55,7 @@ namespace Curry.Controllers
                 return BadRequest();
             }
             var verified = await _userService.Authenticate(user);
-            if (verified == null) return BadRequest();
+            if (verified == null) return Unauthorized();
             var token = _tokenFactory.GenerateToken(verified);
 
             return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });

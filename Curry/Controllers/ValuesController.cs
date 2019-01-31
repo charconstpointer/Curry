@@ -26,7 +26,7 @@ namespace Curry.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2", _currentUser.ToString() };
+            return new[] { "value1", "value2", _currentUser.ToString() };
         }
 
         // GET api/values/5

@@ -31,7 +31,7 @@ namespace Curry
                 users.UseSqlServer(Configuration.GetConnectionString("Curry")));
             services.AddScoped<ITokenFactory<JwtSecurityToken>, JwtTokenFactory>();
             services.AddScoped<UserRepository, UserRepository>();
-            services.AddScoped<UserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

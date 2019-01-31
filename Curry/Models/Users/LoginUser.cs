@@ -1,4 +1,4 @@
-﻿namespace Curry.Models
+﻿namespace Curry.Models.Users
 {
     public class LoginUser
     {
