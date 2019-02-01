@@ -1,24 +1,32 @@
 ﻿using Curry.Models;
 using Curry.Persistence.Repository;
 using System.Threading.Tasks;
+using Curry.Helpers;
 
 namespace Curry.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
-        private readonly UserRepository userRepository;
-        public UserService(UserRepository userRepository)
+        private readonly UserRepository _userRepository;
+        public UserService(UserRepository repository)
         {
-            this.userRepository = userRepository;
+            _userRepository = repository;
         }
         public async Task<User> Authenticate(User user)
         {
-            var res = await userRepository.GetUserByName(user.Name);
-            if(user.Password == res.Password)
-            {
-                return res;
-            }
-            return null;
+            var res = await _userRepository.FindUserByName(user.Name);
+            var passwordHash = Crypto.Hash(user.Password, res.Salt);
+            return passwordHash.Item1 == res.Password ? res : null;
+        }
+
+        public async Task<User> AddUserAsync(User user)
+        {
+            return await _userRepository.AddUserAsync(user);
+        }
+
+        public async Task<User> FindUserByName(string name)
+        {
+            return await _userRepository.FindUserByName(name);
         }
     }
 }
