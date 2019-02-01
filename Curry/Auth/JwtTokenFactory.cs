@@ -21,6 +21,7 @@ namespace Curry.Auth
                    {
                         new Claim(JwtRegisteredClaimNames.Sub, user.Name),
                         new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
+                        new Claim(ClaimTypes.Role, "User")
                     };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"]));

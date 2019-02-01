@@ -1,15 +1,8 @@
 ﻿using Curry.Auth;
 using Curry.Models;
-using Curry.Persistence.Repository;
 using Curry.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Curry.Controllers
@@ -40,11 +33,8 @@ namespace Curry.Controllers
         public async Task<IActionResult> GetUser(string name)
         {
             var user = await _userService.FindUserByName(name);
-            if(user != null)
-            {
-                return Ok(user);
-            }
-            return NotFound();
+            if (user == null) return NotFound();
+            return Ok(user);
         }
         [HttpPost]
         [Route("auth")]

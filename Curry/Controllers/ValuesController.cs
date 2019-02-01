@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Curry.Helpers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Curry.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes =
-    JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(Roles = "Admin, User")]
     [ApiController]
     public class ValuesController : ControllerBase
     {

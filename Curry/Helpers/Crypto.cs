@@ -6,7 +6,7 @@ namespace Curry.Helpers
 {
     public static class Crypto
     {
-        public static (string, byte[]) Hash(string value, byte[] salt = null)
+        public static (string password, byte[] salt) Hash(string value, byte[] salt = null)
         {
             if (salt == null)
             {
@@ -22,7 +22,7 @@ namespace Curry.Helpers
                 prf: KeyDerivationPrf.HMACSHA1,
                 iterationCount: 10000,
                 numBytesRequested: 256 / 8));
-            return (hashed, salt);
+            return (password: hashed, salt: salt);
         }
     }
 }
