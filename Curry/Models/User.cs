@@ -15,5 +15,6 @@ namespace Curry.Models
         public string Name { get; set; }
         [Required]
         public string Password { get; set; }
+        public byte[] Salt { get; set; }
     }
 }
