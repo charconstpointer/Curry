@@ -25,13 +25,13 @@ namespace Curry.Auth
                     };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(config["Tokens:Issuer"],
             config["Tokens:Audience"],
             claims,
             expires: DateTime.Now.AddMinutes(1),
-            signingCredentials: creds);
+            signingCredentials: credentials);
             return token;
         }
     }

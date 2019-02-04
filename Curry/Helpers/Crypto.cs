@@ -17,11 +17,11 @@ namespace Curry.Helpers
                 }
             }
             var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: value,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
+                value,
+                salt,
+                KeyDerivationPrf.HMACSHA1,
+                10000,
+                256 / 8));
             return (password: hashed, salt: salt);
         }
     }
