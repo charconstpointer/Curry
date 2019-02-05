@@ -6,7 +6,7 @@ namespace Curry.Helpers
 {
     public static class Crypto
     {
-        public static (string, byte[]) Hash(string value, byte[] salt = null)
+        public static (string password, byte[] salt) Hash(string value, byte[] salt = null)
         {
             if (salt == null)
             {
@@ -17,12 +17,12 @@ namespace Curry.Helpers
                 }
             }
             var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: value,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-            return (hashed, salt);
+                value,
+                salt,
+                KeyDerivationPrf.HMACSHA1,
+                10000,
+                256 / 8));
+            return (password: hashed, salt: salt);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Curry.Services
         {
             var res = await _userRepository.FindUserByName(user.Name);
             var passwordHash = Crypto.Hash(user.Password, res.Salt);
-            return passwordHash.Item1 == res.Password ? res : null;
+            return passwordHash.password== res.Password ? res : null;
         }
 
         public async Task<User> AddUserAsync(User user)
