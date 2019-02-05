@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Curry.Helpers;
-using Curry.Models;
-using Curry.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,20 +16,17 @@ namespace Curry.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly IUserService userService;
         private readonly int _currentUser;
-        public ValuesController(IHttpContextAccessor httpContextAccessor, IUserService service)
+        public ValuesController(IHttpContextAccessor httpContextAccessor)
         {
-            userService = service;
             _currentUser = httpContextAccessor.CurrentUser();
         }
 
         // GET api/values
         [HttpGet]
-        [Authorize]
-        public async Task<ActionResult<User>> Get()
+        public ActionResult<IEnumerable<string>> Get()
         {
-            return await userService.FindUserById(_currentUser);
+            return new[] { "value1", "value2", _currentUser.ToString() };
         }
 
         // GET api/values/5
