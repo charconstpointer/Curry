@@ -25,5 +25,10 @@ namespace Curry.Persistence.Repository
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
         }
+
+        public async Task<User> FindUserByIdAsync(int id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
     }
 }

@@ -28,5 +28,10 @@ namespace Curry.Services
         {
             return await _userRepository.FindUserByName(name);
         }
+
+        public async Task<User> FindUserById(int id)
+        {
+            return await _userRepository.FindUserByIdAsync(id);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Curry.Models
 {
@@ -14,7 +15,9 @@ namespace Curry.Models
         [Required]
         public string Name { get; set; }
         [Required]
+        [JsonIgnore]
         public string Password { get; set; }
+        [JsonIgnore]
         public byte[] Salt { get; set; }
     }
 }
