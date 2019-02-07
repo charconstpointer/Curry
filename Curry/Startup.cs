@@ -1,4 +1,5 @@
-﻿using Curry.Auth;
+﻿using System;
+using Curry.Auth;
 using Curry.Persistence.Repository;
 using Curry.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -44,6 +45,8 @@ namespace Curry
                 
                 cfg.TokenValidationParameters = new TokenValidationParameters()
                 {
+                    ClockSkew = TimeSpan.FromSeconds(60),
+                    ValidateLifetime = true,
                     ValidIssuer = Configuration["Tokens:Issuer"],
                     ValidAudience = Configuration["Tokens:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))

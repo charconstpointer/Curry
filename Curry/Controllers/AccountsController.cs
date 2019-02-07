@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Curry.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("api/[controller]"), ApiController]
     public class AccountsController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -30,10 +29,22 @@ namespace Curry.Controllers
             return Ok();
         }
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetUser(string name)
+        public async Task<IActionResult> GetUserByName(string name)
         {
+            
             var user = await _userService.FindUserByName(name);
             if (user == null) return NotFound();
+            return Ok(user);
+        }
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            var user = await _userService.FindUserById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             return Ok(user);
         }
         [HttpPost]

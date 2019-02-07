@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text;
 using Curry.Models;
@@ -14,7 +17,7 @@ namespace Curry.Auth
 
         public JwtTokenFactory(IConfiguration config)
         {
-            this._config = config;
+            _config = config;
         }
 
         public JwtSecurityToken GenerateToken(User user)
@@ -28,7 +31,6 @@ namespace Curry.Auth
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
             var token = new JwtSecurityToken(_config["Tokens:Issuer"],
                 _config["Tokens:Audience"],
                 claims,
