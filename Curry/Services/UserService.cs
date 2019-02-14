@@ -1,7 +1,7 @@
-﻿using Curry.Models;
-using Curry.Persistence.Repository;
+﻿using Curry.Persistence.Repository;
 using System.Threading.Tasks;
 using Curry.Helpers;
+using Curry.Models.User;
 
 namespace Curry.Services
 {
@@ -16,7 +16,7 @@ namespace Curry.Services
 
         public async Task<User> Authenticate(User user)
         {
-            var res = await _userRepository.FindUserByName(user.Name);
+            var res = await _userRepository.FindUserByName(user.Username);
             var passwordHash = Crypto.Hash(user.Password, res.Salt);
             return passwordHash.password == res.Password ? res : null;
         }

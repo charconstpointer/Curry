@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using Curry.Persistence;
+using AutoMapper;
 
 namespace Curry
 {
@@ -28,6 +30,7 @@ namespace Curry
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<CurryContext>(users =>
                 users.UseSqlServer(Configuration.GetConnectionString("Curry")));
@@ -35,6 +38,7 @@ namespace Curry
             services.AddScoped<UserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
 
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

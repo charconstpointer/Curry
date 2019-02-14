@@ -1,9 +1,11 @@
 ﻿using Curry.Auth;
-using Curry.Models;
 using Curry.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
+using AutoMapper;
+using Curry.Mappings;
+using Curry.Models.User;
 
 namespace Curry.Controllers
 {
@@ -12,26 +14,30 @@ namespace Curry.Controllers
     {
         private readonly IUserService _userService;
         private readonly ITokenFactory<JwtSecurityToken> _tokenFactory;
+
+        private readonly IMapper _mapper;
         //IConfiguration config;
-        public AccountsController(IUserService service, ITokenFactory<JwtSecurityToken> tokenFactory)
+        public AccountsController(IUserService service, ITokenFactory<JwtSecurityToken> tokenFactory, IMapper mapper)
         {
             _userService = service;
             _tokenFactory = tokenFactory;
+            _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> AddUser([FromBody]User user)
+        public async Task<IActionResult> AddUser([FromBody]UserBindingModel user)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(user);
             }
-            await _userService.AddUserAsync(user);
+
+            var usa = _mapper.Map<UserBindingModel, User>(user);
+            await _userService.AddUserAsync(usa);
             return Ok();
         }
         [HttpGet("{name}")]
         public async Task<IActionResult> GetUserByName(string name)
         {
-            
             var user = await _userService.FindUserByName(name);
             if (user == null) return NotFound();
             return Ok(user);
@@ -44,8 +50,8 @@ namespace Curry.Controllers
             {
                 return NotFound();
             }
-
-            return Ok(user);
+            var usa = _mapper.Map<User, UserResourceModel>(user);
+            return Ok(usa);
         }
         [HttpPost]
         [Route("auth")]

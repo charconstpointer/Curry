@@ -1,7 +1,7 @@
-﻿using Curry.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Curry.Helpers;
+using Curry.Models.User;
 
 namespace Curry.Persistence.Repository
 {
@@ -23,12 +23,16 @@ namespace Curry.Persistence.Repository
         }
         public async Task<User> FindUserByName(string name)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == name);
         }
 
         public async Task<User> FindUserById(int id)
         {
-            return await _context.Users.FindAsync(id);
+            var user = await _context.Users
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .FirstOrDefaultAsync();
+            return user;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Curry.Models;
+﻿using Curry.Models.User;
 
 namespace Curry.Auth
 {
