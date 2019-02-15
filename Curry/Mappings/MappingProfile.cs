@@ -24,6 +24,7 @@ namespace Curry.Mappings
         }
     }
 
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class UserResourceModel
     {
         public string Username { get; set; }
