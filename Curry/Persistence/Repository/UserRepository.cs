@@ -34,7 +34,7 @@ namespace Curry.Persistence.Repository
             var user = await _context.Users
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
     }
