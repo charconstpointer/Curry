@@ -16,7 +16,7 @@ namespace Curry.Mappings
                         (r => r.UserRoles.Select(ur => ur.RoleId)));
 
             CreateMap<User, UserResourceModel>()
-                .ForMember(ubm => ubm.Roles, opt => opt.MapFrom(u => u.UserRoles.Select(ur => ur.Role)));
+                .ForMember(ubm => ubm.Roles, opt => opt.MapFrom(u => u.UserRoles.Select(ur => ur.Role.Description)));
 
             CreateMap<UserBindingModel, User>()
                 .ForMember(u => u.UserRoles,
@@ -29,6 +29,6 @@ namespace Curry.Mappings
     public class UserResourceModel
     {
         public string Username { get; set; }
-        public IEnumerable<Role> Roles { get; set; }
+        public IEnumerable<string> Roles { get; set; }
     }
 }
