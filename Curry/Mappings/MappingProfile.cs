@@ -7,6 +7,7 @@ namespace Curry.Mappings
 {
     public class MappingProfile : Profile
     {
+        
         public MappingProfile()
         {
             CreateMap<User, UserBindingModel>()
