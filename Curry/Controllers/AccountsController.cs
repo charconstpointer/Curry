@@ -54,7 +54,7 @@ namespace Curry.Controllers
             return Ok(usa);
         }
         [HttpPost]
-        [Route("auth")]
+        [Route("token")]
         public async Task<IActionResult> Login(User user)
         {
             if (!ModelState.IsValid)
