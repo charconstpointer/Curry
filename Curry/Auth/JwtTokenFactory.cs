@@ -36,7 +36,7 @@ namespace Curry.Auth
             var token = new JwtSecurityToken(_config["Tokens:Issuer"],
                 _config["Tokens:Audience"],
                 claims,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddMinutes(311),
                 signingCredentials: credentials);
             return token;
         }

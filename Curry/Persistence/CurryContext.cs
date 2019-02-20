@@ -7,6 +7,7 @@ namespace Curry.Persistence
     {
         public CurryContext(DbContextOptions options) : base(options)
         {
+            Database.EnsureCreated();
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }

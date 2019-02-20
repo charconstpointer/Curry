@@ -37,7 +37,12 @@ namespace Curry
             services.AddScoped<ITokenFactory<JwtSecurityToken>, JwtTokenFactory>();
             services.AddScoped<UserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -49,7 +54,7 @@ namespace Curry
                 
                 cfg.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ClockSkew = TimeSpan.FromSeconds(60),
+                    ClockSkew = TimeSpan.FromSeconds(3360),
                     ValidateLifetime = true,
                     ValidIssuer = Configuration["Tokens:Issuer"],
                     ValidAudience = Configuration["Tokens:Audience"],
@@ -67,6 +72,7 @@ namespace Curry
                 var dbContext = serviceScope.ServiceProvider.GetService<CurryContext>();
                 dbContext.Database.EnsureCreated();
             }
+               
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,6 +82,7 @@ namespace Curry
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseCors("MyPolicy");
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();

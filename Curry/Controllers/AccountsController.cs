@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Curry.Mappings;
 using Curry.Models.User;
+using Microsoft.AspNetCore.Cors;
 
 namespace Curry.Controllers
 {
