@@ -1,7 +1,7 @@
-﻿using Curry.Persistence.Repository;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Curry.Helpers;
 using Curry.Models.User;
+using Curry.Persistence.Repository;
 
 namespace Curry.Services
 {
@@ -14,6 +14,7 @@ namespace Curry.Services
             _userRepository = repository;
         }
 
+//IIIIIIIIIIIIIIIIIIIIIIIIIIII
         public async Task<User> Authenticate(User user)
         {
             var res = await _userRepository.FindUserByName(user.Username);
