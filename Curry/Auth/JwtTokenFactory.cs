@@ -31,7 +31,6 @@ namespace Curry.Auth
                 claims.AddRange(user.UserRoles.Select(role => new Claim(ClaimTypes.Role, role.Role.Description)));
             }
 
-            var tesdti = 1;
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(_config["Tokens:Issuer"],
