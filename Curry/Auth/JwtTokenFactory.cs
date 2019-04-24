@@ -18,7 +18,11 @@ namespace Curry.Auth
         {
             _config = config;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public JwtSecurityToken GenerateToken(User user)
         {
             var claims = new List<Claim>();
@@ -30,7 +34,7 @@ namespace Curry.Auth
             {
                 claims.AddRange(user.UserRoles.Select(role => new Claim(ClaimTypes.Role, role.Role.Description)));
             }
-            //clean this shit up
+            
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(_config["Tokens:Issuer"],
